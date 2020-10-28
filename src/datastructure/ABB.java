@@ -6,18 +6,17 @@ public class ABB<K extends Comparable<K>,V> implements IABB<K,V> {
 	public ABB() {
 		root = null;
 	}
-    
 
 	public void insert(K key, V value) {
 		root = insert(root,key,value);
 	}
 	
 	private Node<K,V> insert(Node<K,V> current, K key, V value) {
-		if(current==null) return new Node<K,V>(key,value);
-	    if(key.compareTo(current.getKey())<0) {
-	        current.setLeft(insert(current.getLeft(),key,value));
-	    } else if(key.compareTo(current.getKey())>0) {
-	        current.setRight(insert(current.getRight(),key,value));
+		if(current==null) return new Node<K,V>(null,key,value);
+	    if(key.compareTo(current.key)<0) {
+	        current.left=insert(current.left,key,value);
+	    } else if(key.compareTo(current.key)>0) {
+	        current.right=insert(current.right,key,value);
 	    }
 	    return current;
 	}
@@ -26,25 +25,25 @@ public class ABB<K extends Comparable<K>,V> implements IABB<K,V> {
 	}
 	private Node<K,V> remove(Node<K,V> current, K key) {
 	    if(current==null) return null;
-	    if(current.getKey().compareTo(key)==0) {
-	    	if(current.getLeft()==null && current.getRight()==null) return null;
-	    	if(current.getRight()== null) return current.getLeft();
-	    	if(current.getRight() == null) return current.getRight();
-	    	K minimum = findMinimum(current.getRight());
-	    	current.setKey(minimum);
-	    	current.setRight(remove(current.getRight(),minimum));
+	    if(current.key.compareTo(key)==0) {
+	    	if(current.left==null && current.right==null) return null;
+	    	if(current.left== null) return current.left;
+	    	if(current.right == null) return current.right;
+	    	K minimum = findMinimum(current.right);
+	    	current.key=minimum;
+	    	current.right=remove(current.right,minimum);
 	    	return current;
 	    } 
-	    if(current.getKey().compareTo(key)>0) {
-	        current.setLeft(remove(current.getLeft(),key));
+	    if(current.key.compareTo(key)>0) {
+	        current.left=remove(current.left,key);
 	        return current;
 	    } else {
-	    	current.setRight(remove(current.getRight(),key));
+	    	current.right=remove(current.right,key);
 	    	return current;
 	    }
 	}
 	private K findMinimum(Node<K,V> root) {
-	    return root.getLeft()==null?root.getKey():findMinimum(root.getLeft());
+	    return root.left)==null?root.key:findMinimum(root.left);
 	}
 
 	@Override
@@ -56,26 +55,30 @@ public class ABB<K extends Comparable<K>,V> implements IABB<K,V> {
 	}
 	private V search(Node<K,V> current, K key) {
 		if(current==null) return null;
-		if(current.getKey().compareTo(key)==0) return current.getValue();
-		return current.getKey().compareTo(key)>0?search(current.getLeft(),key):search(current.getRight(),key);
+		if(current.key.compareTo(key)==0) return current.value;
+		return current.key.compareTo(key)>0?search(current.left,key):search(current.right,key);
 	}
 	@Override
 	public int getHeight() {
+		return 0;
 		
 	}
 
 	@Override
 	public String inOrden() {
+		return null;
 		
 	}
 
 	@Override
 	public String postOrden() {
+		return null;
 		
 	}
 
 	@Override
 	public String preOrden() {
+		return null;
 		
 	}
 }
