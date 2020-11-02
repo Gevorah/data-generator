@@ -11,13 +11,13 @@ import model.Generator;
 
 public class Main extends Application {
 
-	private GeneratorGUI generatorGui;
+	private GeneratorGUI generatorGUI;
 	private static  Generator generator;
 
 	public Main() {
 
 		generator= new Generator();
-		generatorGui = new GeneratorGUI(generator);
+		generatorGUI = new GeneratorGUI(generator);
 
 	}
 
@@ -34,17 +34,16 @@ public class Main extends Application {
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("MainPane.fxml"));
 
-		loader.setController(generator);
+		loader.setController(generatorGUI);
 		Parent root = loader.load();
 
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.setTitle("Main Window");
-		generatorGui.loadSettinWindow(null);
+		generatorGUI.loadSettinWindow(null);
 		stage.show();
 		
 	}
 
 
 }
-

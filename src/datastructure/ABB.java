@@ -7,19 +7,19 @@ public class ABB<K extends Comparable<K>,V> implements IABB<K,V> {
 		root = null;
 	}
 
-	public void insert(K key, V value) {
-		root = insert(root,key,value);
+	public void put(K key, V value) {
+		root = put(root,key,value);
 	}
-	
-	private Node<K,V> insert(Node<K,V> current, K key, V value) {
+	private Node<K,V> put(Node<K,V> current, K key, V value) {
 		if(current==null) return new Node<K,V>(null,key,value);
 	    if(key.compareTo(current.key)<0) {
-	        current.left=insert(current.left,key,value);
+	        current.left=put(current.left,key,value);
 	    } else if(key.compareTo(current.key)>0) {
-	        current.right=insert(current.right,key,value);
+	        current.right=put(current.right,key,value);
 	    }
 	    return current;
 	}
+	
 	public void remove(K key) {
 		root = remove(root,key);
 	}
@@ -43,11 +43,8 @@ public class ABB<K extends Comparable<K>,V> implements IABB<K,V> {
 	    }
 	}
 	private K findMinimum(Node<K,V> root) {
-	    return root.left)==null?root.key:findMinimum(root.left);
+	    return root.left==null?root.key:findMinimum(root.left);
 	}
-
-	@Override
-	public Node<K,V> getRoot() {return root;}
 
 	@Override
 	public V search(K key) {
@@ -58,27 +55,48 @@ public class ABB<K extends Comparable<K>,V> implements IABB<K,V> {
 		if(current.key.compareTo(key)==0) return current.value;
 		return current.key.compareTo(key)>0?search(current.left,key):search(current.right,key);
 	}
+	
 	@Override
-	public int getHeight() {
+	public Node<K,V> getRoot() {return root;}
+	
+	@Override
+	public int getHeight(Node<K,V> node) {
+		int leftHeight, rigthHeight, c=0;
+		if(node==null) return -1;
+		else {
+			leftHeight=getHeight(node.left);
+			rigthHeight=getHeight(node.right);
+			c++;
+		}
 		return 0;
 		
 	}
 
+	static String way;
 	@Override
-	public String inOrden() {
-		return null;
-		
+	public void inOrden(Node<K,V> node) {
+		if(node!=null) {
+			inOrden(node.left);
+			way+= node.value+", ";
+			inOrden(node.right);
+		}
 	}
 
 	@Override
-	public String postOrden() {
-		return null;
-		
+	public void preOrden(Node<K,V> node) {
+		if(node!=null) {
+			way+= node.value+", ";
+			inOrden(node.left);
+			inOrden(node.right);
+		}
 	}
 
 	@Override
-	public String preOrden() {
-		return null;
-		
+	public void postOrden(Node<K,V> node) {
+		if(node!=null) {
+			inOrden(node.left);
+			inOrden(node.right);
+			way+= node.value+", ";
+		}
 	}
 }

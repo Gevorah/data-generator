@@ -22,5 +22,16 @@ public class Node<K extends Comparable<K>,V> {
 		if(head.left==this) return 1;
 		if(head.right==this) return 2;
 		return 0;
-	};
+	}
+
+	public K getKey() {
+		return key;
+	}
+
+	
+	public V getValue() {
+		return value;
+	}
+
+	
 }
