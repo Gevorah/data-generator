@@ -32,6 +32,11 @@ public class Generator implements Serializable {
 
 	public void addNumberOfUsers(Integer toAdd) {
 
+		for(int i=1; i<toAdd; i++) {
+			
+			int key=codeGenerator();
+			people.put(key, new Person(key, nameGenerator(), lastName, genderGenerator(), birthDateGenerator(), height, nationality, profile) );
+		}
 	}
 
 	public static int codeGenerator() {
@@ -41,17 +46,19 @@ public class Generator implements Serializable {
 	public final static String NAMES = "data" + File.separator + "names.csv";
 	public final static String SURNAMES = "data" + File.separator + "surnames.csv";
 
-	public String[] nameGenerator() throws IOException {
+	public String[][] nameGenerator() throws IOException {
 		br1 = new BufferedReader(new FileReader(NAMES));
 		String s1 = br1.readLine();
-		String[] names = null;
+		String[][] names = null;
 		int i = 0;
 		while (s1 != null) {
 			br2 = new BufferedReader(new FileReader(SURNAMES));
 			String s2 = br2.readLine();
+			int j=0;
 			while (s2 != null) {
-				names[i++] = s1.split(",")[0];
+				//
 			}
+			i++;
 		}
 		return names;
 	}
@@ -74,6 +81,10 @@ public class Generator implements Serializable {
 
 	public static int randBetween(int start, int end) {
 		return start + (int) Math.round(Math.random() * (end - start));
+	}
+	
+	public static String heightGenerator() {
+		int num = (int) (Math.random() * ((200 - 30) + 30));
 	}
 
 	public static void main(String[] args) {
