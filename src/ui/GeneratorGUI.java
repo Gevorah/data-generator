@@ -1,7 +1,6 @@
 package ui;
 
 import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,44 +17,47 @@ public class GeneratorGUI {
 
 	@FXML
 	private BorderPane mainPane;
-	
-	 @FXML
-	    private TextField numberUsers;
 
-	    @FXML
-	    private TextField lastName;
+	@FXML
+	private TextField numberUsers;
 
-	    @FXML
-	    private TextField gender;
+	@FXML
+	private TextField lastName;
 
-	    @FXML
-	    private TextField birthdate;
+	@FXML
+	private TextField gender;
 
-	    @FXML
-	    private TextField name;
+	@FXML
+	private TextField birthdate;
 
-	    @FXML
-	    private TextField heigth;
+	@FXML
+	private TextField name;
 
-	    @FXML
-	    private TextField nationality;
+	@FXML
+	private TextField heigth;
 
-	    @FXML
-	    private ImageView image;
-	    
-	    @FXML
-	    private TextField nameSearched;
-	    
-	    @FXML
-	    private ListView<?> listView;
-    
+	@FXML
+	private TextField nationality;
+
+	@FXML
+	private ImageView image;
+
+	@FXML
+	private TextField nameSearched;
+
+	@FXML
+	private ListView<?> listView;
+
 	Generator main;
 
 	public GeneratorGUI(Generator main) {
 		this.main = main;
 	}
 
-	public void loadSettinWindow(ActionEvent event) throws IOException {
+
+
+	public void loadSettingWindow(ActionEvent event) throws IOException {
+
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
 		fxmlLoader.setController(this);
@@ -64,7 +66,7 @@ public class GeneratorGUI {
 		mainPane.setCenter(setting);
 
 	}
-	
+
 	public void loadCreate(ActionEvent event) throws IOException {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateUser.fxml"));
@@ -74,7 +76,7 @@ public class GeneratorGUI {
 		mainPane.setCenter(setting);
 
 	}
-	
+
 	public void loadSearch(ActionEvent event) throws IOException {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SearchUser.fxml"));
@@ -87,7 +89,7 @@ public class GeneratorGUI {
 
 	@FXML
 	void create(ActionEvent event)   throws IOException {
-		
+
 		loadCreate(null);
 	}
 
@@ -97,54 +99,55 @@ public class GeneratorGUI {
 
 		loadSearch(null);
 	}
-	
-    @FXML
-    void back(ActionEvent event) throws IOException {
 
-    	loadSettinWindow(null);
-    }
+	@FXML
+	void back(ActionEvent event) throws IOException {
 
-    @FXML
-    void delete(ActionEvent event) {
+		loadSettingWindow(null);
 
-    	Alert alert = new Alert(AlertType.WARNING);
+	}
+
+	@FXML
+	void delete(ActionEvent event) {
+
+		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle(null);
 		alert.setContentText("user has been deleted");
 		alert.showAndWait();
-    }
+	}
 
-    @FXML
-    void edit(ActionEvent event) {
+	@FXML
+	void edit(ActionEvent event) {
 
-    	Alert alert = new Alert(AlertType.WARNING);
+		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle(null);
 		alert.setContentText("the information has been edited correctly");
 		alert.showAndWait();
-    }
+	}
 
-    @FXML
-    void view(ActionEvent event) {
+	@FXML
+	void view(ActionEvent event) {
 
-    }
-    
-    @FXML
-    void createUser(ActionEvent event) {
+	}
 
-    	Alert alert = new Alert(AlertType.WARNING);
+	@FXML
+	void createUser(ActionEvent event) {
+
+		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle(null);
 		alert.setContentText("user successfully registered");
 		alert.showAndWait();
-    }
+	}
 
-    @FXML
-    void selectImage(ActionEvent event) {
+	@FXML
+	void selectImage(ActionEvent event) {
 
-    }
-    
+	}
 
-    @FXML
-    void createNumber(ActionEvent event) {
 
-    }
+	@FXML
+	void createNumber(ActionEvent event) {
+
+	}
 
 }

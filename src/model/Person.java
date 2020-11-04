@@ -1,6 +1,12 @@
 package model;
 
-public class Person {
+import java.io.*;
+
+public class Person implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String code;
 	private String name;
 	private String lastName;

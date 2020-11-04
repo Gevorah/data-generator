@@ -1,6 +1,7 @@
 package datastructure;
+import java.io.*;
 
-public class Node<K extends Comparable<K>,V> {
+public class Node<K extends Comparable<K>,V> implements Serializable {
 	public K key;
 	public V value;
 	public Node<K,V> head, left, right;

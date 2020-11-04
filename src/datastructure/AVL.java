@@ -1,6 +1,7 @@
 package datastructure;
+import java.io.*;
 
-public class AVL<K extends Comparable<K>,V> implements IAVL<K,V>{
+public class AVL<K extends Comparable<K>,V> implements IAVL<K,V> , Serializable {
 
 	public Node<K,V> root;
 	
