@@ -35,8 +35,10 @@ public class Generator implements Serializable {
 		for(int i=1; i<toAdd; i++) {
 			
 			int key=codeGenerator();
-			people.put(key, new Person(key, nameGenerator(), lastName, genderGenerator(), birthDateGenerator(), height, nationality, profile) );
-		}
+
+			//people.put(key, new Person(key, nameGenerator(), lastName, genderGenerator(), birthDateGenerator(), heightGenerator(), nationality, profile) );
+
+	}
 	}
 
 	public static int codeGenerator() {
@@ -85,6 +87,9 @@ public class Generator implements Serializable {
 	
 	public static String heightGenerator() {
 		int num = (int) (Math.random() * ((200 - 30) + 30));
+
+		return num +" cm";
+
 	}
 
 	public static void main(String[] args) {
