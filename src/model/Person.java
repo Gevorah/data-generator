@@ -17,7 +17,7 @@ public class Person implements Serializable {
 	private String profile;
 
 	public Person(String code, String name, String lastName, String gender, String birthdate, String height,
-			String nationality, String profile) {
+			String nationality) {
 
 		this.code = code;
 		this.name = name;
@@ -26,7 +26,7 @@ public class Person implements Serializable {
 		this.birthdate = birthdate;
 		this.height = height;
 		this.nationality = nationality;
-		this.profile = profile;
+		
 	}
 
 	public String getCode() {
@@ -81,14 +81,7 @@ public class Person implements Serializable {
 		this.nationality = nationality;
 	}
 
-	public String getProfile() {
-		return profile;
-	}
 
-	public void setProfile(String profile) {
-		this.profile = profile;
-	}
-	
 	
 
 }

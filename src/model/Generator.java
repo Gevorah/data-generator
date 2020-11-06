@@ -1,19 +1,11 @@
 package model;
 
 import java.io.*;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.*;
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-
-import javax.swing.table.DefaultTableModel;
-
-import datastructure.AVL;
-import datastructure.Node;
+import java.util.*;
+import datastructure.*;
 import javafx.scene.image.Image;
 
 public class Generator implements Serializable {
@@ -31,23 +23,30 @@ public class Generator implements Serializable {
 	}
 
 	public void add(String code, String name, String lastName, String gender, String birthdate, String height,
-			String nationality, String profile) {
-		people.put(code, new Person(code, name, lastName, gender, birthdate, height, nationality, profile));
+			String nationality) {
+		people.put(code, new Person(code, name, lastName, gender, birthdate, height, nationality));
 	}
 
-	public void addNumberOfUsers(Integer toAdd) {
+	public void addNumberOfUsers(Integer toAdd) throws FileNotFoundException, IOException {
 
 		for(int i=1; i<toAdd; i++) {
 			
-			int key=codeGenerator();
+			String key=codeGenerator();
+			
+			String [] metod= nameGenerator().split(" ");
+			String name= metod[0];
+			String lastName=metod[1];
 
-			//people.put(key, new Person(key, nameGenerator(), lastName, genderGenerator(), birthDateGenerator(), heightGenerator(), nationality, profile) );
+			people.put(key, new Person(key, name, lastName, genderGenerator(), birthDateGenerator(), heightGenerator(), "") );
 
 	}
 	}
 
-	public static int codeGenerator() {
-		return (int) (Math.random() * 1000000000);
+	public static String codeGenerator() {
+	
+		int code=(int) (Math.random() * 1000000000);
+		
+		return String.valueOf(code) ;
 	}
 	
 	public void imageGenerator(String name) {
@@ -139,6 +138,21 @@ public class Generator implements Serializable {
 		return gender;
 	}
 
+	public final static String POPULATION = "data" + File.separator + "population.csv";
+	public static List<String> nationalityGenerator(Integer num) throws FileNotFoundException, IOException {
+		BufferedReader br = new BufferedReader(new FileReader(POPULATION));
+		Integer population= num<235?num:(num/235);
+		List<String> list = new ArrayList<String>();
+		String country = br.readLine();
+		while(country!=null) {
+			list.add(population+","+country.split(",")[0]+","+country.split(",")[10]);
+			br.readLine();
+		}
+		br.close();
+		return list;
+	}
+	
+	
 	public void delete(Person node) {
 		people.remove(node.getCode());
 	}
@@ -146,18 +160,24 @@ public class Generator implements Serializable {
 	public void search(String character) {
 
 	}
+	
+	public void edit(Person toEdit, String name, String lastName, String gender, String birthdate, String height,
+			String nationality) {
+		
+		if(name.equals("")) {
+			
+		}
+		else if(name!= null) {
+			toEdit.setName(name);
+		}
+	}
 
 	public void suggestions(String parameter, String mode) {
 
 		try {
 
 			String[] tittles = { "code", "name", "lastName", "gender", "birthdate", "height", "nationality" };
-			String SQL = "select *from contacts where " + mode + " like" + '"' + parameter + '"' + "_%";
-			DefaultTableModel dtm = new DefaultTableModel(null, tittles);
-			Statement st;
-			Connection conn;
-
-			// st = conn.prepareStatement(SQL);
+			
 
 		}
 
