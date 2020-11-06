@@ -1,6 +1,10 @@
 package ui;
 
 import java.io.IOException;
+
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import model.Generator;
@@ -141,7 +146,15 @@ public class GeneratorGUI {
 
 	@FXML
 	void selectImage(ActionEvent event) {
-
+		JFileChooser choose = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("All images", "jpg", "jpeg", "png");
+		choose.setAcceptAllFileFilterUsed(false);
+		choose.setFileFilter(filter);
+		int op = choose.showOpenDialog(null);
+		if (op == JFileChooser.APPROVE_OPTION) {
+			Image avatar = new Image("file:" + choose.getSelectedFile().getAbsolutePath());
+			image.setImage(avatar);
+		}
 	}
 
 

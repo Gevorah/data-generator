@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/create.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="178.0" layoutY="82.0" text="Put">
+         <font>
+            <Font name="Berlin Sans FB" size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="numberUsers" layoutX="230.0" layoutY="83.0" promptText="9999999999" />
+      <Button layoutX="405.0" layoutY="83.0" mnemonicParsing="false" onAction="#createNumber" text="Create">
+         <font>
+            <Font name="Berlin Sans FB" size="12.0" />
+         </font>
+      </Button>
+      <Label layoutX="229.0" layoutY="151.0" text="Register User">
+         <font>
+            <Font name="Berlin Sans FB" size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="lastName" layoutX="140.0" layoutY="240.0" promptText="Last Name" />
+      <TextField fx:id="gender" layoutX="140.0" layoutY="281.0" promptText="Gender" />
+      <TextField fx:id="birthdate" layoutX="140.0" layoutY="322.0" promptText="Birthdate (dd/ MM/ yyyy)" />
+      <TextField fx:id="name" layoutX="140.0" layoutY="197.0" promptText="Name" />
+      <TextField fx:id="heigth" layoutX="330.0" layoutY="197.0" promptText="Height" />
+      <TextField fx:id="nationality" layoutX="331.0" layoutY="240.0" promptText="Nationality" />
+      <ImageView fx:id="image" fitHeight="76.0" fitWidth="85.0" layoutX="330.0" layoutY="281.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/perfil.jpg" />
+         </image>
+      </ImageView>
+      <Button layoutX="429.0" layoutY="324.0" mnemonicParsing="false" onAction="#selectImage" text="Create">
+         <font>
+            <Font name="Berlin Sans FB" size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="293.0" layoutY="364.0" mnemonicParsing="false" onAction="#createUser" text="Create">
+         <font>
+            <Font name="Berlin Sans FB" size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="214.0" layoutY="364.0" mnemonicParsing="false" onAction="#back" text="Back">
+         <font>
+            <Font name="Berlin Sans FB" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>

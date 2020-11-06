@@ -143,7 +143,7 @@ public class Generator implements Serializable {
 		people.remove(node.getCode());
 	}
 
-	public void search(Node node, String character) {
+	public void search(String character) {
 
 	}
 
