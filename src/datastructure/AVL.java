@@ -10,7 +10,8 @@ public class AVL<K extends Comparable<K>,V> implements IAVL<K,V> , Serializable 
 	}
 	
 	public void put(K key, V value) {
-		put(key,value,root);
+		if(root==null)root=new Node<K,V>(null,key,value);
+		else put(key,value,root);
 	}
 	private void put(K key, V value, Node<K,V> current) {
 		if(key.compareTo(current.key)<0) {

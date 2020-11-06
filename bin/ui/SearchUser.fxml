@@ -2,8 +2,11 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
@@ -16,16 +19,30 @@
             <Image url="@../../images/find.png" />
          </image>
       </ImageView>
-      <Label layoutX="243.0" layoutY="39.0" text="search user">
+      <Label layoutX="237.0" layoutY="14.0" text="search user">
          <font>
             <Font name="Berlin Sans FB" size="24.0" />
          </font>
       </Label>
-      <TextField fx:id="nameSearched" layoutX="204.0" layoutY="74.0" />
+      <TextField fx:id="nameSearched" layoutX="226.0" layoutY="41.0" />
       <Button layoutX="116.0" layoutY="340.0" mnemonicParsing="false" onAction="#back" prefHeight="30.0" prefWidth="60.0" text="Back" />
       <Button layoutX="216.0" layoutY="340.0" mnemonicParsing="false" onAction="#edit" prefHeight="30.0" prefWidth="60.0" text="Edit" />
       <Button layoutX="316.0" layoutY="340.0" mnemonicParsing="false" onAction="#delete" prefHeight="30.0" prefWidth="60.0" text="Delete" />
-      <ListView fx:id="listView" layoutX="197.0" layoutY="114.0" prefHeight="200.0" prefWidth="200.0" />
       <Button layoutX="416.0" layoutY="340.0" mnemonicParsing="false" onAction="#view" prefHeight="30.0" prefWidth="60.0" text="View" />
+      <RadioButton layoutX="186.0" layoutY="80.0" mnemonicParsing="false" text="name">
+         <toggleGroup>
+            <ToggleGroup fx:id="searchCriteria" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton layoutX="258.0" layoutY="80.0" mnemonicParsing="false" text="surname" toggleGroup="$searchCriteria" />
+      <RadioButton layoutX="341.0" layoutY="80.0" mnemonicParsing="false" text="full name" toggleGroup="$searchCriteria" />
+      <RadioButton layoutX="423.0" layoutY="80.0" mnemonicParsing="false" text="code" toggleGroup="$searchCriteria" />
+      <TableView fx:id="Searched" layoutX="191.0" layoutY="116.0" prefHeight="200.0" prefWidth="231.0">
+        <columns>
+          <TableColumn fx:id="ColumnCode" prefWidth="75.0" text="Code" />
+          <TableColumn fx:id="ColumnName" prefWidth="75.0" text="Name" />
+            <TableColumn prefWidth="75.0" text="Surname" />
+        </columns>
+      </TableView>
    </children>
 </Pane>

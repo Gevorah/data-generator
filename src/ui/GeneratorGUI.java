@@ -12,7 +12,10 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -51,7 +54,19 @@ public class GeneratorGUI {
 	private TextField nameSearched;
 
 	@FXML
-	private ListView<?> listView;
+	private TableView<?> Searched;
+
+	@FXML
+	private TableColumn<?, ?> ColumnCode;
+
+	@FXML
+	private TableColumn<?, ?> ColumnName;
+
+	@FXML
+	private TableColumn<?, ?> ColumnSurname;
+
+	@FXML
+	private ToggleGroup searchCriteria;
 
 	Generator main;
 
@@ -59,10 +74,7 @@ public class GeneratorGUI {
 		this.main = main;
 	}
 
-
-
 	public void loadSettingWindow(ActionEvent event) throws IOException {
-
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
 		fxmlLoader.setController(this);
@@ -93,14 +105,13 @@ public class GeneratorGUI {
 	}
 
 	@FXML
-	void create(ActionEvent event)   throws IOException {
+	void create(ActionEvent event) throws IOException {
 
 		loadCreate(null);
 	}
 
-
 	@FXML
-	void search(ActionEvent event)  throws IOException{
+	void search(ActionEvent event) throws IOException {
 
 		loadSearch(null);
 	}
@@ -133,15 +144,32 @@ public class GeneratorGUI {
 	@FXML
 	void view(ActionEvent event) {
 
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle(null);
+		alert.setContentText();
+		alert.showAndWait();
 	}
 
 	@FXML
 	void createUser(ActionEvent event) {
 
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle(null);
-		alert.setContentText("user successfully registered");
-		alert.showAndWait();
+		try {
+
+			main.add(name.getText(), lastName.getText(), gender.getText(), birthdate.getText(), heigth.getText(),
+					nationality.getText());
+
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle(null);
+			alert.setContentText("user successfully registered");
+			alert.showAndWait();
+
+		} catch (Exception e) {
+
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("invalid information");
+			alert.setContentText("fill in all the fields");
+			alert.showAndWait();
+		}
 	}
 
 	@FXML
@@ -156,7 +184,6 @@ public class GeneratorGUI {
 			image.setImage(avatar);
 		}
 	}
-
 
 	@FXML
 	void createNumber(ActionEvent event) {

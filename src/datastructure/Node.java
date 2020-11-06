@@ -6,7 +6,7 @@ public class Node<K extends Comparable<K>,V> implements Serializable {
 	public V value;
 	public Node<K,V> head, left, right;
 	public int BFactor;
-	
+
 	public Node(Node<K,V> head, K key, V value) {
 		this.head=head;
 		this.key=key;
