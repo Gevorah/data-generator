@@ -14,11 +14,13 @@ public class Generator implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private AVL<String, Person> people;
 	public static HashMap<String, Image> profiles;
-	private ArrayList<Person> tmp;
+	private ArrayList<Person> generate;
+	private ArrayList<Person> searched;
 
 	public Generator() {
 		people = new AVL<String, Person>();
-		tmp = new ArrayList<Person>();
+		generate = new ArrayList<Person>();
+		searched = new ArrayList<Person>();
 	}
 
 	public void add( String name, String lastName, String gender, String birthdate, String height,
@@ -28,10 +30,16 @@ public class Generator implements Serializable {
 		people.put(key, new Person(key, name, lastName, gender, birthdate, height, nationality));
 	}
 
-	public void addNumberOfUsers(Integer toAdd) throws FileNotFoundException, IOException {
+	public void addPeople() {
+		for(Person tmp:generate) {
+			people.put(tmp.getCode(), tmp);
+		}
+	}
+	
+	public void generatePeople(Integer toAdd) throws FileNotFoundException, IOException {
 		List<String> list = nationalityGenerator(toAdd);
 		int k=0;
-		for (int i = 1; i<tmp.size() && k<toAdd; i++) {
+		for(int i=0; i<list.size() && k<toAdd; i++) {
 			String[] country = list.get(i).split(",");
 			int percent = Integer.parseInt(country[1]);
 			int j=0;
@@ -40,15 +48,20 @@ public class Generator implements Serializable {
 				String[] method = nameGenerator().split(" ");
 				String name = method[0];
 				String lastName = method[1];
-				people.put(key,new Person(key, name, lastName, genderGenerator(), birthDateGenerator(), heightGenerator(), country[0]));
+				generate.add(new Person(key, name, lastName, genderGenerator(), birthDateGenerator(), heightGenerator(), country[0]));
 				k++;
 			}
 		}
 	}
 
+	public ArrayList<Person> getSearched() {
+		return searched;
+	}
+
+
 	public static void main(String[] args) throws IOException {
 		Generator g = new Generator();
-		g.addNumberOfUsers(1000);
+		g.generatePeople(1000000);
 	}
 	public static String codeGenerator() {
 
@@ -147,11 +160,11 @@ public class Generator implements Serializable {
 		BufferedReader br = new BufferedReader(new FileReader(POPULATION));
 		List<String> list = new ArrayList<String>();
 		String country = br.readLine();
-		while (country != null) {
+		while ((country=br.readLine()) != null) {
 			String[] tmp = country.split(",");
-			int population = (int)(num*Double.parseDouble(tmp[10].substring(0,2)));	
+			double percent = Double.parseDouble(tmp[10].substring(0,tmp[10].length()-2))/100 +0.0005;
+			int population = (int)(num*percent);	
 			list.add(tmp[0] + "," + (population==0?1:population));
-			br.readLine();
 		}
 		br.close();
 		return list;
@@ -161,8 +174,24 @@ public class Generator implements Serializable {
 		people.remove(node.getCode());
 	}
 
-	public void search(String character) {
+	public Person search(String criteria, String character) {
 
+		if(criteria.equals("name")) {
+			
+			people.search(character);
+		}
+		else if(criteria.equals("surname")) {
+			people.search(character);
+		}
+		else if(criteria.equals("full name")) {
+			people.search(character);
+		}
+		else if(criteria.equals("code")) {
+			people.search(character);
+		}
+		
+		Person ad= null;
+		return ad;
 	}
 
 	public void edit(Person toEdit, String name, String lastName, String gender, String birthdate, String height,

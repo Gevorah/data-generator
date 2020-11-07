@@ -3,6 +3,10 @@ import java.io.*;
 
 public class AVL<K extends Comparable<K>,V> implements IAVL<K,V> , Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public Node<K,V> root;
 	
 	public AVL() {
@@ -76,7 +80,7 @@ public class AVL<K extends Comparable<K>,V> implements IAVL<K,V> , Serializable 
 	
 	public void rebalance(Node<K,V> node) {
 		if(node.BFactor<0) {
-			if(node.left.BFactor>0)rigthRotate(node.right);
+			if(node.right.BFactor>0)rigthRotate(node.right);
 			leftRotate(node);
 		}else if(node.BFactor>0) {
 			if(node.left.BFactor<0)leftRotate(node.left);
@@ -93,8 +97,8 @@ public class AVL<K extends Comparable<K>,V> implements IAVL<K,V> , Serializable 
 		if(f.head==null)root=nroot;
 		else {
 			int x = f.isXChild();
-			if(x==2)f.head.left=nroot;
-			else if(x==1)f.head.right=nroot;
+			if(x==1)f.head.left=nroot;
+			else if(x==2)f.head.right=nroot;
 		}
 		nroot.left=f;
 		f.head=nroot;
@@ -111,32 +115,26 @@ public class AVL<K extends Comparable<K>,V> implements IAVL<K,V> , Serializable 
 		if(f.head==null)root=nroot;
 		else {
 			int x = f.isXChild();
-			if(x==2)f.head.left=nroot;
-			else if(x==1) f.head.right=nroot;
+			if(x==1)f.head.left=nroot;
+			else if(x==2) f.head.right=nroot;
 		}
 		nroot.right=f;
 		f.head=nroot;
-		f.BFactor=f.BFactor+1 - Math.min(nroot.BFactor, 0);
-		nroot.BFactor=nroot.BFactor+1 + Math.max(f.BFactor, 0);
+		f.BFactor=f.BFactor-1 - Math.max(nroot.BFactor, 0);
+		nroot.BFactor=nroot.BFactor-1 + Math.min(f.BFactor, 0);
 	}
 
 	@Override
 	public Node<K, V> getRoot() {
 		return root;
 	}
-
-	@Override
-	public int getHeight(Node<K,V> node) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	
-	static String way;
+	public static String way;
 	@Override
 	public void inOrden(Node<K,V> node) {
 		if(node!=null) {
 			inOrden(node.left);
-			way+= node.value+", ";
+			way+= node.value.toString()+", ";
 			inOrden(node.right);
 		}
 	}

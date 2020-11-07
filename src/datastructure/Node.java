@@ -2,6 +2,10 @@ package datastructure;
 import java.io.*;
 
 public class Node<K extends Comparable<K>,V> implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public K key;
 	public V value;
 	public Node<K,V> head, left, right;
@@ -29,7 +33,6 @@ public class Node<K extends Comparable<K>,V> implements Serializable {
 		return key;
 	}
 
-	
 	public V getValue() {
 		return value;
 	}

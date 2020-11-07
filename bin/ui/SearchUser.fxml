@@ -25,10 +25,10 @@
          </font>
       </Label>
       <TextField fx:id="nameSearched" layoutX="226.0" layoutY="41.0" />
-      <Button layoutX="116.0" layoutY="340.0" mnemonicParsing="false" onAction="#back" prefHeight="30.0" prefWidth="60.0" text="Back" />
-      <Button layoutX="216.0" layoutY="340.0" mnemonicParsing="false" onAction="#edit" prefHeight="30.0" prefWidth="60.0" text="Edit" />
-      <Button layoutX="316.0" layoutY="340.0" mnemonicParsing="false" onAction="#delete" prefHeight="30.0" prefWidth="60.0" text="Delete" />
-      <Button layoutX="416.0" layoutY="340.0" mnemonicParsing="false" onAction="#view" prefHeight="30.0" prefWidth="60.0" text="View" />
+      <Button layoutX="96.0" layoutY="340.0" mnemonicParsing="false" onAction="#back" prefHeight="30.0" prefWidth="60.0" text="Back" />
+      <Button layoutX="186.0" layoutY="340.0" mnemonicParsing="false" onAction="#edit" prefHeight="30.0" prefWidth="60.0" text="Edit" />
+      <Button layoutX="277.0" layoutY="340.0" mnemonicParsing="false" onAction="#delete" prefHeight="30.0" prefWidth="60.0" text="Delete" />
+      <Button layoutX="375.0" layoutY="340.0" mnemonicParsing="false" onAction="#view" prefHeight="30.0" prefWidth="60.0" text="View" />
       <RadioButton layoutX="186.0" layoutY="80.0" mnemonicParsing="false" text="name">
          <toggleGroup>
             <ToggleGroup fx:id="searchCriteria" />
@@ -41,8 +41,9 @@
         <columns>
           <TableColumn fx:id="ColumnCode" prefWidth="75.0" text="Code" />
           <TableColumn fx:id="ColumnName" prefWidth="75.0" text="Name" />
-            <TableColumn prefWidth="75.0" text="Surname" />
+            <TableColumn fx:id="ColumnSurname" prefWidth="75.0" text="Surname" />
         </columns>
       </TableView>
+      <Button layoutX="462.0" layoutY="340.0" mnemonicParsing="false" onAction="#searchUser" prefHeight="30.0" prefWidth="60.0" text="Search" />
    </children>
 </Pane>

@@ -5,13 +5,17 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -20,6 +24,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import model.Generator;
+import model.Person;
 
 public class GeneratorGUI {
 
@@ -54,19 +59,40 @@ public class GeneratorGUI {
 	private TextField nameSearched;
 
 	@FXML
-	private TableView<?> Searched;
+	private TableView<Person> Searched;
 
 	@FXML
-	private TableColumn<?, ?> ColumnCode;
+	private TableColumn<Person, String> ColumnCode;
 
 	@FXML
-	private TableColumn<?, ?> ColumnName;
+	private TableColumn<Person, String> ColumnName;
 
 	@FXML
-	private TableColumn<?, ?> ColumnSurname;
+	private TableColumn<Person, String> ColumnSurname;
 
 	@FXML
 	private ToggleGroup searchCriteria;
+
+	@FXML
+	private TextField lastNameEdit;
+
+	@FXML
+	private TextField genderEdit;
+
+	@FXML
+	private TextField birthdateEdit;
+
+	@FXML
+	private TextField nameEdit;
+
+	@FXML
+	private TextField heigthEdit;
+
+	@FXML
+	private TextField nationalityEdit;
+
+	@FXML
+	private ImageView imageEdit;
 
 	Generator main;
 
@@ -105,6 +131,23 @@ public class GeneratorGUI {
 	}
 
 	@FXML
+	void editButton(ActionEvent event) {
+
+		try {
+
+		/*	main.edit(toEdit, nameEdit.getText(), lastNameEdit.getText(), genderEdit.getText(), birthdateEdit.getText(),
+					heigthEdit.getText(), nationalityEdit.getText());*/
+
+		} catch (Exception e) {
+
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("invalid information");
+			alert.setContentText("fill in all the fields");
+			alert.showAndWait();
+		}
+	}
+
+	@FXML
 	void create(ActionEvent event) throws IOException {
 
 		loadCreate(null);
@@ -133,12 +176,41 @@ public class GeneratorGUI {
 	}
 
 	@FXML
-	void edit(ActionEvent event) {
+	void searchUser(ActionEvent event) {
 
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle(null);
-		alert.setContentText("the information has been edited correctly");
-		alert.showAndWait();
+		String criteria = ((RadioButton) searchCriteria.getSelectedToggle()).getText();
+
+		try {
+
+			main.search(criteria, nameSearched.getText());
+
+		} catch (Exception e) {
+
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("invalid information");
+			alert.setContentText("fill in all the fields");
+			alert.showAndWait();
+		}
+
+		/*ObservableList<Person> observableList;
+		observableList = FXCollections.observableArrayList(main.getSearched());
+
+		Searched.setItems(observableList);
+		ColumnName.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
+		ColumnCode.setCellValueFactory(new PropertyValueFactory<Person, String>("code"));
+		ColumnSurname.setCellValueFactory(new PropertyValueFactory<Person, String>("lastName"));
+*/
+	}
+
+	@FXML
+	void edit(ActionEvent event) throws IOException {
+
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("EditWindow.fxml"));
+		fxmlLoader.setController(this);
+		Parent setting = fxmlLoader.load();
+		mainPane.getChildren().clear();
+		mainPane.setCenter(setting);
+
 	}
 
 	@FXML
@@ -146,7 +218,7 @@ public class GeneratorGUI {
 
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle(null);
-		alert.setContentText();
+		alert.setContentText("");
 		alert.showAndWait();
 	}
 

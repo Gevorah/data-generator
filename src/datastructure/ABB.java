@@ -60,18 +60,7 @@ public class ABB<K extends Comparable<K>,V> implements IABB<K,V> {
 	@Override
 	public Node<K,V> getRoot() {return root;}
 	
-	@Override
-	public int getHeight(Node<K,V> node) {
-		int leftHeight, rigthHeight, c=0;
-		if(node==null) return -1;
-		else {
-			leftHeight=getHeight(node.left);
-			rigthHeight=getHeight(node.right);
-			c++;
-		}
-		return 0;
-		
-	}
+	
 
 	static String way;
 	@Override
@@ -100,4 +89,8 @@ public class ABB<K extends Comparable<K>,V> implements IABB<K,V> {
 			way+= node.value+", ";
 		}
 	}
+
+	
+	
+	
 }

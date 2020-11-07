@@ -81,7 +81,9 @@ public class Person implements Serializable {
 		this.nationality = nationality;
 	}
 
-
-	
+	@Override
+	public String toString() {
+		return "Person [code=" + code + ", name=" + name + ", lastName=" + lastName + "]";
+	}
 
 }

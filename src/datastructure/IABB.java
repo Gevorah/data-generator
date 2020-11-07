@@ -6,7 +6,6 @@ public interface  IABB<K extends Comparable<K>, V>{
 	public void remove (K key);
 	public V search (K key);
 	public Node <K,V> getRoot();
-	public int getHeight(Node<K,V> node);
 	public void inOrden(Node<K,V> node);
 	public void preOrden(Node<K,V> node);
 	public void postOrden(Node<K,V> node);
