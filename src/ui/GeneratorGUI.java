@@ -98,6 +98,7 @@ public class GeneratorGUI {
 
 	public GeneratorGUI(Generator main) {
 		this.main = main;
+		main.init();
 	}
 
 	public void loadSettingWindow(ActionEvent event) throws IOException {
@@ -134,19 +135,26 @@ public class GeneratorGUI {
 	void editButton(ActionEvent event) {
 
 		try {
-
-			/*
-			 * main.edit(toEdit, nameEdit.getText(), lastNameEdit.getText(),
-			 * genderEdit.getText(), birthdateEdit.getText(), heigthEdit.getText(),
-			 * nationalityEdit.getText());
-			 */
-
-		} catch (Exception e) {
+			if (nameEdit.getText().equals("") || lastNameEdit.getText().equals("") || genderEdit.getText().equals("")
+					|| birthdateEdit.getText().equals("") || heigthEdit.getText().equals("")
+					|| nationalityEdit.getText().equals("")) {
+				throw new IllegalArgumentException();
+			}
+			main.edit(observableList.get(0), nameEdit.getText(), lastNameEdit.getText(), genderEdit.getText(),
+					birthdateEdit.getText(), heigthEdit.getText(), nationalityEdit.getText());
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Congrats");
+			alert.setContentText("user sitting correctly");
+			alert.showAndWait();
+			
+		} catch (IllegalArgumentException e) {
 
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("invalid information");
 			alert.setContentText("fill in all the fields");
 			alert.showAndWait();
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -171,25 +179,25 @@ public class GeneratorGUI {
 
 	@FXML
 	void delete(ActionEvent event) {
-
-		main.delete(node);
+		main.delete(observableList.get(0));
+		observableList.clear();
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle(null);
 		alert.setContentText("user has been deleted");
 		alert.showAndWait();
 	}
 
+	public ObservableList<Person> observableList;
+
 	@FXML
 	void searchUser(ActionEvent event) {
-
-		String criteria = ((RadioButton) searchCriteria.getSelectedToggle()).getText();
 
 		try {
 			if (nameSearched.getText().equals("")) {
 
 				throw new IllegalArgumentException();
 			}
-			main.search(criteria, nameSearched.getText());
+			main.search(nameSearched.getText());
 
 		} catch (Exception e) {
 
@@ -198,17 +206,13 @@ public class GeneratorGUI {
 			alert.setContentText("fill in all the fields");
 			alert.showAndWait();
 		}
+		observableList = FXCollections.observableArrayList(main.getSearched());
 
-		/*
-		 * ObservableList<Person> observableList; observableList =
-		 * FXCollections.observableArrayList(main.getSearched());
-		 * 
-		 * Searched.setItems(observableList); ColumnName.setCellValueFactory(new
-		 * PropertyValueFactory<Person, String>("name"));
-		 * ColumnCode.setCellValueFactory(new PropertyValueFactory<Person,
-		 * String>("code")); ColumnSurname.setCellValueFactory(new
-		 * PropertyValueFactory<Person, String>("lastName"));
-		 */
+		Searched.setItems(observableList);
+		ColumnName.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
+		ColumnCode.setCellValueFactory(new PropertyValueFactory<Person, String>("code"));
+		ColumnSurname.setCellValueFactory(new PropertyValueFactory<Person, String>("lastName"));
+
 	}
 
 	@FXML
@@ -220,6 +224,14 @@ public class GeneratorGUI {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(setting);
 
+		Person p = observableList.get(0);
+		imageEdit.setImage(Generator.profiles.get(p.getCode()));
+		nameEdit.setText(p.getName());
+		lastNameEdit.setText(p.getLastName());
+		genderEdit.setText(p.getName());
+		nationalityEdit.setText(p.getNationality());
+		birthdateEdit.setText(p.getBirthdate());
+		heigthEdit.setText(p.getHeight());
 	}
 
 	@FXML
@@ -233,16 +245,17 @@ public class GeneratorGUI {
 
 	@FXML
 	void createUser(ActionEvent event) {
-		
+
 		try {
 
-			if(name.getText().equals("") || lastName.getText().equals("")|| gender.getText().equals("")|| birthdate.getText().equals("") ||heigth.getText().equals("")||
-					nationality.getText().equals("")) {
-				
+			if (name.getText().equals("") || lastName.getText().equals("") || gender.getText().equals("")
+					|| birthdate.getText().equals("") || heigth.getText().equals("")
+					|| nationality.getText().equals("")) {
+
 				throw new IllegalArgumentException();
 			}
-			main.add("",name.getText(), lastName.getText(), gender.getText(), birthdate.getText(), heigth.getText(),
-					nationality.getText());
+			main.add(image.getImage(), name.getText(), lastName.getText(), gender.getText(), birthdate.getText(),
+					heigth.getText(), nationality.getText());
 
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle(null);
@@ -251,6 +264,8 @@ public class GeneratorGUI {
 
 		} catch (Exception e) {
 
+			System.out.println(e);
+			System.out.println(e.getMessage());
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("invalid information");
 			alert.setContentText("fill in all the fields");
@@ -270,23 +285,26 @@ public class GeneratorGUI {
 			image.setImage(avatar);
 		}
 	}
-	
+
 	public static int MAX = 999999999;
+
 	@FXML
 	void createNumber(ActionEvent event) {
 		String tmp = numberUsers.getText();
 		try {
-			int num = tmp.equals("")?MAX:Integer.parseInt(tmp);
-			if(num<1) throw new IllegalArgumentException();
+			int num = tmp.equals("") ? MAX : Integer.parseInt(tmp);
+			if (num < 1)
+				throw new IllegalArgumentException();
 			main.addPeople(num);
-		}catch(Exception e) {
+		} catch (IllegalArgumentException e) {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("invalid number");
 			alert.setContentText("enter only positive numbers");
 			alert.showAndWait();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		
+
 	}
 
 }

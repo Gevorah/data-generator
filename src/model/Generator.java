@@ -13,7 +13,7 @@ public class Generator implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private AVL<String, Person> people;
-	public static HashMap<String, Image> profiles;
+	public static HashMap<String, Image> profiles = new HashMap<String, Image>();;
 	private ArrayList<Person> generate;
 	private ArrayList<Person> searched;
 
@@ -23,10 +23,16 @@ public class Generator implements Serializable {
 		searched = new ArrayList<Person>();
 	}
 
-	public void add(String profile, String name, String lastName, String gender, String birthdate, String height,
+	public void addTest(Image profile, String key, String name, String lastName, String gender, String birthdate, String height,
+			String nationality) {
+		profiles.put(key, profile);;
+		people.put(key, new Person(key, name, lastName, gender, birthdate, height, nationality));
+	}
+	
+	public void add(Image profile, String name, String lastName, String gender, String birthdate, String height,
 			String nationality) {
 		String key= codeGenerator();
-		profiles();
+		profiles.put(key, profile);;
 		people.put(key, new Person(key, name, lastName, gender, birthdate, height, nationality));
 	}
 
@@ -38,6 +44,7 @@ public class Generator implements Serializable {
 	}
 	
 	public void generatePeople(Integer toAdd) throws FileNotFoundException, IOException {
+		generate.clear();
 		List<String> list = nationalityGenerator(toAdd);
 		int k=0;
 		for(int i=0; i<list.size() && k<toAdd; i++) {
@@ -62,7 +69,7 @@ public class Generator implements Serializable {
 
 	public static void main(String[] args) throws IOException {
 		Generator g = new Generator();
-		g.generatePeople(1000000);
+		g.generatePeople(10000);
 	}
 	public static String codeGenerator() {
 		int code = (int) (Math.random() * 1000000000);
@@ -76,7 +83,7 @@ public class Generator implements Serializable {
 			urlc.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 			urlc.connect();
 			BufferedInputStream is = new BufferedInputStream(urlc.getInputStream());
-			FileOutputStream fos = new FileOutputStream("images" + File.separator + "image.jpeg");
+			FileOutputStream fos = new FileOutputStream("images" + File.separator +key+".jpeg");
 			byte[] array = new byte[1000];
 			int leido = is.read(array);
 			while (leido > 0) {
@@ -88,7 +95,8 @@ public class Generator implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		profiles.put(key, new Image("images" + File.separator + "image.jpeg"));
+		Image im = new Image("file:images/"+key+".jpeg");
+		Generator.profiles.put(key, im);
 	}
 
 	public final static int NL = 6781;
@@ -173,10 +181,10 @@ public class Generator implements Serializable {
 		people.remove(node.getCode());
 	}
 
-	public Person search(String criteria, String character) {
-
-		if(criteria.equals("name")) {
-			
+	public void search( String character) {
+		searched.clear();
+		
+		/*if(criteria.equals("name")) {
 			people.search(character);
 		}
 		else if(criteria.equals("surname")) {
@@ -186,11 +194,9 @@ public class Generator implements Serializable {
 			people.search(character);
 		}
 		else if(criteria.equals("code")) {
-			people.search(character);
-		}
-		
-		Person ad= null;
-		return ad;
+			searched.add(people.search(character));
+		}*/
+		searched.add(people.search(character));
 	}
 
 	public void edit(Person toEdit, String name, String lastName, String gender, String birthdate, String height,
@@ -214,6 +220,16 @@ public class Generator implements Serializable {
 		if (!nationality.equals(toEdit.getNationality())) {
 			toEdit.setNationality(nationality);
 		}
+		people.put(toEdit.getCode(),toEdit);
+	}
+	
+	public void init() {
+		addTest(new Image("file:images/perfil.jpeg"),"002154","cristian","cordoba","male", "2002/12/18","172","colombia");
+		addTest(new Image("file:images/perfil.jpeg"),"461","lina","nilson","female", "1965/02/16","165","Canada");
+		addTest(new Image("file:images/perfil.jpeg"),"75375","annita","ouritao","female", "2015/06/02","150","Brazil");
+		addTest(new Image("file:images/perfil.jpeg"),"677537","Munir","lavnrame","male", "1972/01/24","187","Afghanistan");
+		
+	
 	}
 
 }
