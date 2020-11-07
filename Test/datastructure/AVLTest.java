@@ -18,17 +18,22 @@ class AVLTest {
 	}
 	
 	@Test
-	void putTest() {
-		
+	void searchTest() {
+		setup1();
+		assertEquals("Jhon", avl.search(12).toString());
+		assertEquals("Paul", avl.search(1).toString());
+		assertEquals("Anderson", avl.search(37).toString());
 	}
 
 	@Test
-	void putTest() {
-		
+	void removeTest() {
+		setup1();
+		avl.remove(12);
+		assertEquals(null, avl.search(12));
+		avl.remove(2);
+		assertEquals(null, avl.search(2));
+		avl.remove(2);
+		assertEquals(null, avl.search(2));
 	}
 	
-	@Test
-	void putTest() {
-		
-	}
 }

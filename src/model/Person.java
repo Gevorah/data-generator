@@ -14,11 +14,9 @@ public class Person implements Serializable {
 	private String birthdate;
 	private String height;
 	private String nationality;
-	private String profile;
 
 	public Person(String code, String name, String lastName, String gender, String birthdate, String height,
 			String nationality) {
-
 		this.code = code;
 		this.name = name;
 		this.lastName = lastName;
@@ -83,7 +81,7 @@ public class Person implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Person [code=" + code + ", name=" + name + ", lastName=" + lastName + "]";
+		return code+", "+name+" "+lastName;
 	}
 
 }

@@ -135,8 +135,11 @@ public class GeneratorGUI {
 
 		try {
 
-		/*	main.edit(toEdit, nameEdit.getText(), lastNameEdit.getText(), genderEdit.getText(), birthdateEdit.getText(),
-					heigthEdit.getText(), nationalityEdit.getText());*/
+			/*
+			 * main.edit(toEdit, nameEdit.getText(), lastNameEdit.getText(),
+			 * genderEdit.getText(), birthdateEdit.getText(), heigthEdit.getText(),
+			 * nationalityEdit.getText());
+			 */
 
 		} catch (Exception e) {
 
@@ -169,6 +172,7 @@ public class GeneratorGUI {
 	@FXML
 	void delete(ActionEvent event) {
 
+		main.delete(node);
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle(null);
 		alert.setContentText("user has been deleted");
@@ -181,7 +185,10 @@ public class GeneratorGUI {
 		String criteria = ((RadioButton) searchCriteria.getSelectedToggle()).getText();
 
 		try {
+			if (nameSearched.getText().equals("")) {
 
+				throw new IllegalArgumentException();
+			}
 			main.search(criteria, nameSearched.getText());
 
 		} catch (Exception e) {
@@ -192,14 +199,16 @@ public class GeneratorGUI {
 			alert.showAndWait();
 		}
 
-		/*ObservableList<Person> observableList;
-		observableList = FXCollections.observableArrayList(main.getSearched());
-
-		Searched.setItems(observableList);
-		ColumnName.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
-		ColumnCode.setCellValueFactory(new PropertyValueFactory<Person, String>("code"));
-		ColumnSurname.setCellValueFactory(new PropertyValueFactory<Person, String>("lastName"));
-*/
+		/*
+		 * ObservableList<Person> observableList; observableList =
+		 * FXCollections.observableArrayList(main.getSearched());
+		 * 
+		 * Searched.setItems(observableList); ColumnName.setCellValueFactory(new
+		 * PropertyValueFactory<Person, String>("name"));
+		 * ColumnCode.setCellValueFactory(new PropertyValueFactory<Person,
+		 * String>("code")); ColumnSurname.setCellValueFactory(new
+		 * PropertyValueFactory<Person, String>("lastName"));
+		 */
 	}
 
 	@FXML
@@ -224,10 +233,15 @@ public class GeneratorGUI {
 
 	@FXML
 	void createUser(ActionEvent event) {
-
+		
 		try {
 
-			main.add(name.getText(), lastName.getText(), gender.getText(), birthdate.getText(), heigth.getText(),
+			if(name.getText().equals("") || lastName.getText().equals("")|| gender.getText().equals("")|| birthdate.getText().equals("") ||heigth.getText().equals("")||
+					nationality.getText().equals("")) {
+				
+				throw new IllegalArgumentException();
+			}
+			main.add("",name.getText(), lastName.getText(), gender.getText(), birthdate.getText(), heigth.getText(),
 					nationality.getText());
 
 			Alert alert = new Alert(AlertType.WARNING);
@@ -256,10 +270,23 @@ public class GeneratorGUI {
 			image.setImage(avatar);
 		}
 	}
-
+	
+	public static int MAX = 999999999;
 	@FXML
 	void createNumber(ActionEvent event) {
-
+		String tmp = numberUsers.getText();
+		try {
+			int num = tmp.equals("")?MAX:Integer.parseInt(tmp);
+			if(num<1) throw new IllegalArgumentException();
+			main.addPeople(num);
+		}catch(Exception e) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("invalid number");
+			alert.setContentText("enter only positive numbers");
+			alert.showAndWait();
+		}
+		
+		
 	}
 
 }

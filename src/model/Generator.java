@@ -23,14 +23,15 @@ public class Generator implements Serializable {
 		searched = new ArrayList<Person>();
 	}
 
-	public void add( String name, String lastName, String gender, String birthdate, String height,
+	public void add(String profile, String name, String lastName, String gender, String birthdate, String height,
 			String nationality) {
-
 		String key= codeGenerator();
+		profiles();
 		people.put(key, new Person(key, name, lastName, gender, birthdate, height, nationality));
 	}
 
-	public void addPeople() {
+	public void addPeople(int num) throws FileNotFoundException, IOException {
+		generatePeople(num);
 		for(Person tmp:generate) {
 			people.put(tmp.getCode(), tmp);
 		}
@@ -48,6 +49,7 @@ public class Generator implements Serializable {
 				String[] method = nameGenerator().split(" ");
 				String name = method[0];
 				String lastName = method[1];
+				imageGenerator(key);
 				generate.add(new Person(key, name, lastName, genderGenerator(), birthDateGenerator(), heightGenerator(), country[0]));
 				k++;
 			}
@@ -58,26 +60,23 @@ public class Generator implements Serializable {
 		return searched;
 	}
 
-
 	public static void main(String[] args) throws IOException {
 		Generator g = new Generator();
 		g.generatePeople(1000000);
 	}
 	public static String codeGenerator() {
-
 		int code = (int) (Math.random() * 1000000000);
-
 		return String.valueOf(code);
 	}
 
-	public void imageGenerator(String name) {
+	public void imageGenerator(String key) {
 		try {
 			URL url = new URL("https://thispersondoesnotexist.com/image");
 			URLConnection urlc = url.openConnection();
 			urlc.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 			urlc.connect();
 			BufferedInputStream is = new BufferedInputStream(urlc.getInputStream());
-			FileOutputStream fos = new FileOutputStream("data" + File.separator + "image.jpeg");
+			FileOutputStream fos = new FileOutputStream("images" + File.separator + "image.jpeg");
 			byte[] array = new byte[1000];
 			int leido = is.read(array);
 			while (leido > 0) {
@@ -89,7 +88,7 @@ public class Generator implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		profiles.put(name, new Image("data" + File.separator + "image.jpeg"));
+		profiles.put(key, new Image("images" + File.separator + "image.jpeg"));
 	}
 
 	public final static int NL = 6781;
@@ -217,15 +216,4 @@ public class Generator implements Serializable {
 		}
 	}
 
-	public void suggestions(String parameter, String mode) {
-
-		try {
-
-			String[] tittles = { "code", "name", "lastName", "gender", "birthdate", "height", "nationality" };
-
-		}
-
-		catch (Exception e) {
-		}
-	}
 }
