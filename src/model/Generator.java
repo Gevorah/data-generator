@@ -12,34 +12,49 @@ public class Generator implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private AVL<String, Person> people;
+	private AVL<String, Person> nameAVL;
+	private AVL<String, Person> surnameAVL;
+	private AVL<String, Person> completeNameAVL;
+	private AVL<String, Person> codeAVL;
 	public static HashMap<String, Image> profiles = new HashMap<String, Image>();;
 	private ArrayList<Person> generate;
 	private ArrayList<Person> searched;
 
 	public Generator() {
-		people = new AVL<String, Person>();
+		codeAVL = new AVL<String, Person>();
+		nameAVL = new AVL<String, Person>();
+		surnameAVL = new AVL<String, Person>();
+		completeNameAVL = new AVL<String, Person>();
 		generate = new ArrayList<Person>();
 		searched = new ArrayList<Person>();
 	}
 
 	public void addTest(Image profile, String key, String name, String lastName, String gender, String birthdate, String height,
 			String nationality) {
-		profiles.put(key, profile);;
-		people.put(key, new Person(key, name, lastName, gender, birthdate, height, nationality));
+		profiles.put(key, profile);
+		nameAVL.put(name, new Person(key, name, lastName, gender, birthdate, height, nationality));
+		surnameAVL.put(lastName, new Person(key, name, lastName, gender, birthdate, height, nationality));
+		completeNameAVL.put(name+" "+lastName, new Person(key, name, lastName, gender, birthdate, height, nationality));
+		codeAVL.put(key, new Person(key, name, lastName, gender, birthdate, height, nationality));
 	}
 	
 	public void add(Image profile, String name, String lastName, String gender, String birthdate, String height,
 			String nationality) {
 		String key= codeGenerator();
 		profiles.put(key, profile);;
-		people.put(key, new Person(key, name, lastName, gender, birthdate, height, nationality));
+		nameAVL.put(name, new Person(key, name, lastName, gender, birthdate, height, nationality));
+		surnameAVL.put(lastName, new Person(key, name, lastName, gender, birthdate, height, nationality));
+		completeNameAVL.put(name+" "+lastName, new Person(key, name, lastName, gender, birthdate, height, nationality));
+		codeAVL.put(key, new Person(key, name, lastName, gender, birthdate, height, nationality));
 	}
 
 	public void addPeople(int num) throws FileNotFoundException, IOException {
 		generatePeople(num);
 		for(Person tmp:generate) {
-			people.put(tmp.getCode(), tmp);
+			nameAVL.put(tmp.getName(), tmp);
+			surnameAVL.put(tmp.getLastName(), tmp);
+			completeNameAVL.put(tmp.getName()+" "+tmp.getLastName(), tmp);
+			codeAVL.put(tmp.getCode(), tmp);
 		}
 	}
 	
@@ -178,25 +193,32 @@ public class Generator implements Serializable {
 	}
 
 	public void delete(Person node) {
-		people.remove(node.getCode());
+		nameAVL.remove(node.getBirthdate());
+		surnameAVL.remove(node.getLastName());
+		completeNameAVL.remove(node.getName()+ " "+ node.getLastName());
+		codeAVL.remove(node.getCode());
 	}
 
-	public void search( String character) {
+	public void search(String criteria, String character) {
 		searched.clear();
 		
-		/*if(criteria.equals("name")) {
-			people.search(character);
+		if(criteria.equals("Name")) {
+			searched.add(nameAVL.search(character));
+			
 		}
-		else if(criteria.equals("surname")) {
-			people.search(character);
+		else if(criteria.equals("Surname")) {
+			searched.add(surnameAVL.search(character));
+			
 		}
-		else if(criteria.equals("full name")) {
-			people.search(character);
+		else if(criteria.equals("Full Name")) {
+			searched.add(completeNameAVL.search(character));
+			
 		}
-		else if(criteria.equals("code")) {
-			searched.add(people.search(character));
-		}*/
-		searched.add(people.search(character));
+		else if(criteria.equals("Code")) {
+			searched.add(codeAVL.search(character));
+			
+		}
+		
 	}
 
 	public void edit(Person toEdit, String name, String lastName, String gender, String birthdate, String height,
@@ -209,7 +231,7 @@ public class Generator implements Serializable {
 			toEdit.setLastName(lastName);
 		}
 		if (!gender.equals(toEdit.getGender())) {
-			toEdit.setGender(gender);;
+			toEdit.setGender(gender);
 		}
 		if (!birthdate.equals(toEdit.getBirthdate())) {
 			toEdit.setBirthdate(birthdate);
@@ -220,14 +242,21 @@ public class Generator implements Serializable {
 		if (!nationality.equals(toEdit.getNationality())) {
 			toEdit.setNationality(nationality);
 		}
-		people.put(toEdit.getCode(),toEdit);
+		nameAVL.remove(toEdit.getName());
+		nameAVL.put(toEdit.getName(),toEdit);
+		surnameAVL.remove(toEdit.getLastName());
+		surnameAVL.put(toEdit.getLastName(),toEdit);
+		completeNameAVL.remove(toEdit.getName()+" "+toEdit.getLastName());
+		completeNameAVL.put(toEdit.getName()+" "+toEdit.getLastName(),toEdit);
+		codeAVL.remove(toEdit.getCode());
+		codeAVL.put(toEdit.getCode(),toEdit);
 	}
 	
 	public void init() {
-		addTest(new Image("file:images/perfil.jpeg"),"002154","cristian","cordoba","male", "2002/12/18","172","colombia");
-		addTest(new Image("file:images/perfil.jpeg"),"461","lina","nilson","female", "1965/02/16","165","Canada");
-		addTest(new Image("file:images/perfil.jpeg"),"75375","annita","ouritao","female", "2015/06/02","150","Brazil");
-		addTest(new Image("file:images/perfil.jpeg"),"677537","Munir","lavnrame","male", "1972/01/24","187","Afghanistan");
+		addTest(new Image("file:images/perfil.jpg"),"002154","cristian","cordoba","male", "2002/12/18","172","colombia");
+		addTest(new Image("file:images/find.png"),"461","lina","nilson","female", "1965/02/16","165","Canada");
+		addTest(new Image("file:images/perfil.jpg"),"75375","annita","ouritao","female", "2015/06/02","150","Brazil");
+		addTest(new Image("file:images/perfil.jpg"),"677537","Munir","lavnrame","male", "1972/01/24","187","Afghanistan");
 		
 	
 	}

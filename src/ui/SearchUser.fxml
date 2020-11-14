@@ -2,9 +2,11 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
@@ -12,7 +14,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="400.0" fitWidth="600.0" layoutX="7.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="400.0" fitWidth="600.0" layoutX="-2.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/find.png" />
          </image>
@@ -35,5 +37,13 @@
         </columns>
       </TableView>
       <Button layoutX="462.0" layoutY="340.0" mnemonicParsing="false" onAction="#searchUser" prefHeight="30.0" prefWidth="60.0" text="Search" />
+      <RadioButton fx:id="RBname" layoutX="138.0" layoutY="84.0" mnemonicParsing="false" text="Name">
+         <toggleGroup>
+            <ToggleGroup fx:id="criterial" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="RBfullname" layoutX="329.0" layoutY="84.0" mnemonicParsing="false" text="Full Name" toggleGroup="$criterial" />
+      <RadioButton fx:id="RBsurname" layoutX="237.0" layoutY="84.0" mnemonicParsing="false" text="Surname" toggleGroup="$criterial" />
+      <RadioButton fx:id="RBcode" layoutX="422.0" layoutY="84.0" mnemonicParsing="false" text="Code" toggleGroup="$criterial" />
    </children>
 </Pane>

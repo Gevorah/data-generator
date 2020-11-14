@@ -71,7 +71,19 @@ public class GeneratorGUI {
 	private TableColumn<Person, String> ColumnSurname;
 
 	@FXML
-	private ToggleGroup searchCriteria;
+	private RadioButton RBname;
+
+	@FXML
+	private ToggleGroup criterial;
+
+	@FXML
+	private RadioButton RBfullname;
+
+	@FXML
+	private RadioButton RBsurname;
+
+	@FXML
+	private RadioButton RBcode;
 
 	@FXML
 	private TextField lastNameEdit;
@@ -146,14 +158,14 @@ public class GeneratorGUI {
 			alert.setTitle("Congrats");
 			alert.setContentText("user sitting correctly");
 			alert.showAndWait();
-			
+
 		} catch (IllegalArgumentException e) {
 
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("invalid information");
 			alert.setContentText("fill in all the fields");
 			alert.showAndWait();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -193,17 +205,20 @@ public class GeneratorGUI {
 	void searchUser(ActionEvent event) {
 
 		try {
-			if (nameSearched.getText().equals("")) {
 
+			
+			if (nameSearched.getText().equals("")) {
 				throw new IllegalArgumentException();
 			}
-			main.search(nameSearched.getText());
 
-		} catch (Exception e) {
+			String criteriaSearch = ((RadioButton) criterial.getSelectedToggle()).getText();
+			main.search(criteriaSearch, nameSearched.getText());
+
+		} catch (IllegalArgumentException e) {
 
 			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("invalid information");
-			alert.setContentText("fill in all the fields");
+			alert.setTitle("Invalid Information");
+			alert.setContentText("Fill in all the fields");
 			alert.showAndWait();
 		}
 		observableList = FXCollections.observableArrayList(main.getSearched());
