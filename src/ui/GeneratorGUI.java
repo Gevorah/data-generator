@@ -71,7 +71,19 @@ public class GeneratorGUI {
 	private TableColumn<Person, String> ColumnSurname;
 
 	@FXML
-	private ToggleGroup searchCriteria;
+	private RadioButton RBname;
+
+	@FXML
+	private ToggleGroup criterial;
+
+	@FXML
+	private RadioButton RBfullname;
+
+	@FXML
+	private RadioButton RBsurname;
+
+	@FXML
+	private RadioButton RBcode;
 
 	@FXML
 	private TextField lastNameEdit;
@@ -146,14 +158,14 @@ public class GeneratorGUI {
 			alert.setTitle("Congrats");
 			alert.setContentText("user sitting correctly");
 			alert.showAndWait();
-			
+
 		} catch (IllegalArgumentException e) {
 
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("invalid information");
 			alert.setContentText("fill in all the fields");
 			alert.showAndWait();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -193,17 +205,20 @@ public class GeneratorGUI {
 	void searchUser(ActionEvent event) {
 
 		try {
-			if (nameSearched.getText().equals("")) {
 
+			
+			if (nameSearched.getText().equals("")) {
 				throw new IllegalArgumentException();
 			}
-			main.search(nameSearched.getText());
 
-		} catch (Exception e) {
+			String criteriaSearch = ((RadioButton) criterial.getSelectedToggle()).getText();
+			main.search(criteriaSearch, nameSearched.getText());
+
+		} catch (IllegalArgumentException e) {
 
 			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("invalid information");
-			alert.setContentText("fill in all the fields");
+			alert.setTitle("Invalid Information");
+			alert.setContentText("Fill in all the fields");
 			alert.showAndWait();
 		}
 		observableList = FXCollections.observableArrayList(main.getSearched());
@@ -228,7 +243,7 @@ public class GeneratorGUI {
 		imageEdit.setImage(Generator.profiles.get(p.getCode()));
 		nameEdit.setText(p.getName());
 		lastNameEdit.setText(p.getLastName());
-		genderEdit.setText(p.getName());
+		genderEdit.setText(p.getGender());
 		nationalityEdit.setText(p.getNationality());
 		birthdateEdit.setText(p.getBirthdate());
 		heigthEdit.setText(p.getHeight());
@@ -239,7 +254,8 @@ public class GeneratorGUI {
 
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle(null);
-		alert.setContentText("");
+		Person p = observableList.get(0);
+		alert.setContentText(p.getName()+ "\n"+ p.getLastName()+"\n"+ p.getBirthdate() +"\n"+ p.getGender()+"\n"+ p.getNationality()+"\n");
 		alert.showAndWait();
 	}
 
@@ -292,10 +308,14 @@ public class GeneratorGUI {
 	void createNumber(ActionEvent event) {
 		String tmp = numberUsers.getText();
 		try {
-			int num = tmp.equals("") ? MAX : Integer.parseInt(tmp);
+			int num = tmp.trim().isEmpty() ? MAX : Integer.parseInt(tmp);
 			if (num < 1)
 				throw new IllegalArgumentException();
 			main.addPeople(num);
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle(" congratulations");
+			alert.setContentText("the users have been created");
+			alert.showAndWait();
 		} catch (IllegalArgumentException e) {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("invalid number");
